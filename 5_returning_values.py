@@ -50,9 +50,36 @@ people_feeding = int(input("How many people are you feeding?\n"))
 pizza_slices = 8
 print (f"Each person would get {pizza_slices*pizza//people_feeding} slices of pizza, with {pizza_slices%pizza} slices remaning")
 """
+"""
 #21
 money = int(input("How much money do you have?\n"))
 #22
 tv_cost = int(input("How much do TV's cost?\n"))
 #23
 print(f"If you buy a TV you would have {money - tv_cost} dollars left")
+print(f"If you wait for a 20% off sale the TV will cost {tv_cost*0.8}")
+"""
+"""
+#25-27
+bitcoin_price = 64748
+bitcoins = int(input("How many bitcoins do you have?\n"))
+print(f"Your crypto wallet is worth {bitcoins * bitcoin_price}")
+"""
+"""
+#29-30
+money_earned = int(input("How much money do you earn a week?\n"))
+tax_rate = float(input("How much is the tax rate? as a decimal eg 0.15\n"))
+print (f"You will take away {money_earned/tax_rate} dollars after taxes")
+"""
+#31
+book = input("Name a book\n").lower()
+#32
+print(f"{book}")
+book = book.upper()
+print(f"{book}")
+book = book.title()
+print(f"{book}")
+#33
+number = int(input("Name a number\n"))
+#34
+print (f"{book*number} ")
