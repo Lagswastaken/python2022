@@ -1,5 +1,5 @@
 from adventurelib import *
-
+Room.items = Bag()
 def main():
 	start()
 
@@ -55,15 +55,61 @@ def travel(direction):
 		current_room = current_room.exit(direction)
 		print(f"You go {direction}")
 		print(current_room)
+		print (current_room.exits())
 @when("look")
 def look():
 	print(current_room)
+#items
+knife - Item("a dirty knife", "knife")
+knife.description = "Its an old knife, your run your finger across the blade, it is dull."
 
+red_keycard = Item(" a red keycard", "red card", "red keycard")
+red_keycard.description = "It's a red keycard. It probably opens a door or a locker somewhere"
 
+joker_movie - Item("joker", "joker movie")
+joker.description = "Its an old copy of the Joker movie from 2019, you relate to this movie alot."
 
+fortnite_battle_pass - Item("battlepass", "fortnite battlepass", "batlle pass", "fortnite battle pass")
+fortnite_battle_pass.description = "It's the chapter one season 3 battle pass with the og john wick skin."
 
+inventory = Bag()
 
+#bags
+mess_hall.items.add(red_keycard)
+cargo.items.add(knife)
+@when("look")
+def look():
+	print(current_room)
+	print(f"There are exits to the {current_room.exits()}")
+	if len(current_room.items) > 0:
+		print("You also see:")
+		for item in current_room.items:
+			print(item)
+@when("get ITEM")
+@when("take ITEM")
+@when("pick up ITEM")
+def pickup(item):
+	if item in current_room.items:
+		t = current_room.items.take(item)
+		inventory.add(t)
+		print(f"You pick up the {item}")
+	else:
+		print(f"There is no {item} in this room")
 
+@when("inventory")
+@when("show inventory")
+@when("what is in my pocket")
+def player_inventory():
+	print("You are carrying")
+	for item in inventory:
+		print(item)
+@when("look at ITEM")
+def look_at(item):
+	if item in inventory:
+		t - inventory.find(item)
+		print(t.description)
+	else:
+		print(f"You aren't carrying a {item}")
 
 
 
