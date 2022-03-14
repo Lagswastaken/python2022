@@ -1,7 +1,5 @@
 from adventurelib import *
 Room.items = Bag()
-def main():
-	start()
 
 #Rooms
 parts_and_services = Room("""You wake up and see all the old run down animatronic suits around, you must have blacked out during your investigation, you stand up to notice your torch is missing.""")
@@ -23,6 +21,7 @@ pasillo_central = Room("""Another dark empty hallway leads t""")
 #Add Items to Bags
 
 #Define Variables (eg"@when")
+current_room = parts_and_services
 @when("inventory")
 @when("show inventory")
 @when("what is in my pocket")
@@ -59,6 +58,15 @@ def look():
 			print(item)
 
 @when ("go DIRECTION")
+@when ("travel DIRECTION")
+@when ("e", direction = "east")
+@when ("n", direction = "north")
+@when ("s", direction = "south")
+@when ("w", direction = "west")
+@when ("east", direction = "east")
+@when ("north", direction = "north")
+@when ("south", direction = "south")
+@when ("west", direction = "west")
 def travel(direction):
 	global current_room
 	if direction in current_room.exits():
@@ -73,4 +81,8 @@ def look():
 #Binds
 
 #Main Function
+def main():
+	print(current_room)
+	start()
+
 main()
