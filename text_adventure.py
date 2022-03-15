@@ -17,13 +17,30 @@ game_area = Room("""Balloon Boy is standing next to all the arcade games lit up 
 kids_cove = Room("""Mangle lays dismantled on the floor of kids cove, Foxy's old animatronic suit from the first location is all mangled in the corner.""")
 party_room_one = Room("""Chica's old suit from the first location is slumped over in the corner of the first party room, it seems to be leaking out some sort of thick red liquid.""")
 party_room_two = Room("""Bonnie's old suit from the first location is slumped over on the table in the second party room, the suit is laying in a pool of what appears to be blood.""")
-right_air_vent = Room("""You crawl into the right air vent, it seems to be blocked by an old rusty exoskeleton.""")
+right_air_vent = Room("""You crawl into the right air vent, it seems to be empty, it's very dark, you can't make out where it leads.""")
 left_air_vent = Room("""You crawl into the left air vent, it seems to be blocked by an old rusty exoskeleton.""")
-pasillo_central = Room("""Another dark empty hallway""")
-
+pasillo_central = Room("""Another dark empty hallway, the lights flicker on and off. Two signs hang from the ceiling, you can make our Party Rooms 1 and 2, and Security Office STAFF ONLY""")
+office = Room("""The security office is dark""")
 ###################
 #CONNECTIONS
 ###################
+parts_and_services.east = main_hall
+main_hall.east = game_area
+main_hall.south = pasillo_central
+pasillo_central.east = party_room_two
+pasillo_central.west = party_room_one
+party_room_one.south = left_air_vent
+left_air_vent.north = party_room_one
+party_room_one.east = pasillo_central
+party_room_two.west = pasillo_central
+party_room_two.south = right_air_vent
+game_area.north = show_stage
+right_air_vent.west = office
+show_stage.south = game_area
+game_area.south = kids_cove
+kids_cove.north = game_area
+pasillo_central.south = office
+
 
 ###################
 #ITEMS
