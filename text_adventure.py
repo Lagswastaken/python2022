@@ -1,7 +1,15 @@
+###################
+#IMPORTS
+###################
+
 from adventurelib import *
+
+###################
+#ROOMS
+###################
+
 Room.items = Bag()
 
-#Rooms
 parts_and_services = Room("""You wake up and see all the old run down animatronic suits around, you must have blacked out during your investigation, you stand up to notice your torch is missing.""")
 main_hall = Room("""You enter a long dark hallway, the lights begin to flicker, you can make out faintly some signs that read, Pasillo Central and Game Area""")
 show_stage = Room("""The three main animatronics stand on the stage. Toy Chica and Toy Bonny are stood still, Toy Freddy has your torch in his hand.""")
@@ -11,20 +19,37 @@ party_room_one = Room("""Chica's old suit from the first location is slumped ove
 party_room_two = Room("""Bonnie's old suit from the first location is slumped over on the table in the second party room, the suit is laying in a pool of what appears to be blood.""")
 right_air_vent = Room("""You crawl into the right air vent, it seems to be blocked by an old rusty exoskeleton.""")
 left_air_vent = Room("""You crawl into the left air vent, it seems to be blocked by an old rusty exoskeleton.""")
-pasillo_central = Room("""Another dark empty hallway leads t""")
-#Connections
+pasillo_central = Room("""Another dark empty hallway""")
 
-#Items
+###################
+#CONNECTIONS
+###################
 
-#Bags
+###################
+#ITEMS
+###################
 
-#Add Items to Bags
+Item.description =""
 
-#Define Variables (eg"@when")
+###################
+#BAGS
+###################
+
+###################
+#ADD ITEMS TO BAGS
+###################
+
+###################
+#DEFINE VARIABLES
+###################
+inventory = Bag()
+
 current_room = parts_and_services
 @when("inventory")
 @when("show inventory")
 @when("what is in my pocket")
+@when("inv")
+@when("show inv")
 def player_inventory():
 	print("You are carrying")
 	for item in inventory:
@@ -40,6 +65,7 @@ def look_at(item):
 @when("get ITEM")
 @when("take ITEM")
 @when("pick up ITEM")
+@when("grap ITEM")
 def pickup(item):
 	if item in current_room.items:
 		t = current_room.items.take(item)
@@ -51,7 +77,7 @@ def pickup(item):
 @when("look")
 def look():
 	print(current_room)
-	print(f"There are exits to the {current_room.exits()}")
+	print(f"There are exits to the, {current_room.exits()}")
 	if len(current_room.items) > 0:
 		print("You also see:")
 		for item in current_room.items:
@@ -78,9 +104,14 @@ def travel(direction):
 def look():
 	print(current_room)
 
-#Binds
+###################
+#BINDS
+###################
 
-#Main Function
+####################
+#MAIN FUNCTION
+###################
+
 def main():
 	print(current_room)
 	start()
