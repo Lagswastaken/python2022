@@ -21,6 +21,7 @@ right_air_vent = Room("""You crawl into the right air vent, it seems to be empty
 left_air_vent = Room("""You crawl into the left air vent, it seems to be blocked by an old rusty exoskeleton.""")
 pasillo_central = Room("""Another dark empty hallway, the lights flicker on and off. Two signs hang from the ceiling, you can make our Party Rooms 1 and 2, and Security Office STAFF ONLY""")
 office = Room("""The security office is dark""")
+
 ###################
 #CONNECTIONS
 ###################
@@ -48,6 +49,9 @@ pasillo_central.south = office
 
 Item.description =""
 
+torch = Item("a torch", "torch", "flashlight", "a flashlight")
+torch.description = ("An old black flashlight, it doesn't reach far but it's better than nothing")
+
 ###################
 #BAGS
 ###################
@@ -56,12 +60,15 @@ Item.description =""
 #ADD ITEMS TO BAGS
 ###################
 
+show_stage.items.add(torch)
+
 ###################
 #DEFINE VARIABLES
 ###################
 inventory = Bag()
 
 current_room = parts_and_services
+
 @when("inventory")
 @when("show inventory")
 @when("what is in my pocket")
@@ -83,11 +90,15 @@ def look_at(item):
 @when("take ITEM")
 @when("pick up ITEM")
 @when("grap ITEM")
+@when("grab the ITEM")
+@when("take the ITEM")
+@when("pick up the ITEM")
 def pickup(item):
 	if item in current_room.items:
 		t = current_room.items.take(item)
 		inventory.add(t)
 		print(f"You pick up the {item}")
+		print(item.description)
 	else:
 		print(f"There is no {item} in this room")
 
@@ -120,6 +131,14 @@ def travel(direction):
 @when("look")
 def look():
 	print(current_room)
+
+@when("use ITEM")
+def use(item):
+	if item == torch and current_room == office:
+		print("You use the torch and in the corner of the room Shadow Bonnie appears, creepily la")	
+	else:
+		print("You use the torch, nothing happens.") 
+
 
 ###################
 #BINDS

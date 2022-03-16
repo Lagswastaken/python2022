@@ -33,7 +33,7 @@ quaters.north = airlock
 #items
 Item.description ="" #make sure each item has a description
 keycard = Item("A red keycard","keycard","card","key", "red keycard")
-keycard.description = "You look at the keycarda and see that it is labelled, Escape Pod"
+keycard.description = "You look at the keycard and see that it is labelled, Escape Pod"
 
 note = Item("a scribbled note", "note","paper","code")
 note.description = "You look at the note. The numbers 2,3,5,4 are scribbled"
