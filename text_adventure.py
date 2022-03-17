@@ -52,6 +52,18 @@ Item.description =""
 torch = Item("a torch", "torch", "flashlight", "a flashlight")
 torch.description = ("An old black flashlight, it doesn't reach far but it's better than nothing")
 
+note_1 = Item("a note", "note")
+note_1.description = ("It's been 6 weeks since the missing children were last seen, celebrating a birthday party and then they went missing.")
+
+note_2 = Item("a note", "note")
+note_2.description = ("")
+
+note_3 = Item("a note", "note")
+note_3.description = ("")
+
+note_4 = Item("a note", "note")
+note_4.description =("")
+
 ###################
 #BAGS
 ###################
@@ -66,6 +78,9 @@ show_stage.items.add(torch)
 #DEFINE VARIABLES
 ###################
 inventory = Bag()
+
+torch_got = False
+in_security_office = False
 
 current_room = parts_and_services
 
@@ -98,7 +113,7 @@ def pickup(item):
 		t = current_room.items.take(item)
 		inventory.add(t)
 		print(f"You pick up the {item}")
-		print(item.description)
+		print(t.description)
 	else:
 		print(f"There is no {item} in this room")
 
@@ -110,6 +125,14 @@ def look():
 		print("You also see:")
 		for item in current_room.items:
 			print(item)
+
+@when("help")
+@when("objectives")
+def objectives():
+	d = {False:"Incomplete", True:"Complete"}
+	print(f"Objective #1 - Find your flashlight. - {d[torch_got]}")
+	if torch_got:
+		print(f"Objective #2 - Head to the security office - {d[in_security_office]}")
 
 @when ("go DIRECTION")
 @when ("travel DIRECTION")
@@ -134,8 +157,9 @@ def look():
 
 @when("use ITEM")
 def use(item):
-	if item == torch and current_room == office:
-		print("You use the torch and in the corner of the room Shadow Bonnie appears, creepily la")	
+	if item in inventory and current_room == office and item == "torch":
+		print("You use the torch and in the corner of the room Shadow Bonnie appears, creepily laughing, Shadow Bonnie disappears and on the floor lies a note.")	
+		office.items.add(note_1)
 	else:
 		print("You use the torch, nothing happens.") 
 
