@@ -20,7 +20,7 @@ party_room_two = Room("""Bonnie's old suit from the first location is slumped ov
 right_air_vent = Room("""You crawl into the right air vent, it seems to be empty, it's very dark, you can't make out where it leads.""")
 left_air_vent = Room("""You crawl into the left air vent, it seems to be blocked by an old rusty exoskeleton.""")
 pasillo_central = Room("""Another dark empty hallway, the lights flicker on and off. Two signs hang from the ceiling, you can make our Party Rooms 1 and 2, and Security Office STAFF ONLY""")
-office = Room("""The security office is dark""")
+office = Room("""The security office is dark, Freddy sits slumped over in the corner, his jaw keeps flicking open and closed.""")
 
 ###################
 #CONNECTIONS
@@ -56,13 +56,28 @@ note_1 = Item("a note", "note")
 note_1.description = ("It's been 6 weeks since the missing children were last seen, celebrating a birthday party and then they went missing.")
 
 note_2 = Item("a note", "note")
-note_2.description = ("")
+note_2.description = ("Gabriel was the first to be lured away by %$#$%@$ @$%#@%$, the guests that night say they saw her following someone dressed in a Spring Bonnie suit")
 
 note_3 = Item("a note", "note")
-note_3.description = ("")
+note_3.description = ("Jeremy was the second to be lured away by Wi^$#%^ Af$#^$, the guest")
 
 note_4 = Item("a note", "note")
 note_4.description =("")
+
+bonnies_head = Item("head", "animatronic head", "bonnies head", "bonnie's head")
+bonnies_head.description =("An old animatronic bunny suit head, it used to belong to Bonnie.")
+
+chicas_head = Item("head", "animatronic head", "bonnies head", "bonnie's head")
+chicas_head.description =("An old animatronic chicken suit head, it used to belong to Chica.")
+
+foxys_head = Item("head", "animatronic head", "bonnies head", "bonnie's head")
+foxys_head.description =("An old animatronic fox suit head, it used to belong to Foxy.")
+
+freddies_head = Item("head", "animatronic head", "bonnies head", "bonnie's head")
+freddies_head.description =("An old animatronic bear suit head, it used to belong to Freddy.")
+
+golden_freddies_head = Item("head", "animatronic head", "bonnies head", "bonnie's head")
+golden_freddies_head.description =("An old animatronic golden bear suit head, it used to belong to Golden Freddy.")
 
 ###################
 #BAGS
@@ -73,14 +88,11 @@ note_4.description =("")
 ###################
 
 show_stage.items.add(torch)
-
+party_room_two.items.add(bonnies_head)
 ###################
 #DEFINE VARIABLES
 ###################
 inventory = Bag()
-
-torch_got = False
-in_security_office = False
 
 current_room = parts_and_services
 
@@ -114,8 +126,25 @@ def pickup(item):
 		inventory.add(t)
 		print(f"You pick up the {item}")
 		print(t.description)
+		if item in inventory and current_room == party_room_two and t == bonnies_head:
+			print("You lift Bonnie's head off the suit, inside the springlock suit you see a slumped over, bloody body. You drag the body out of the old, revolting animatronic suit and lay it on the ground. The body belongs to one of the missing children, Gabriel.")
+			party_room_two.description = "Bonnies empty suit lies on the floor, missing its head, Gabriels body lies lifelessly next to Bonnies empty suit, Gabriels spirit once posessed this suit and has now found peace thanks to you."
+			inventory.take("head")
+			party_room_two.items.add(note_2)
+		elif item in inventory and current_room == party_room_one and t == chicas_head:
+			print("You lift Chicas head off the suit, inside the old springlock suit you see a slumped over, bloody, rotting, body. You drag the body out of the old, smelly, revolting, animatronic suit and lay it on the ground. The body belongs to one of the missing children, Susie.")
+			party_room_one.description = "Chicas empty suit lies on the floor, missing its head, Susies body lies lifelessly next to Chicas empty suit, Susies spirit once posessed this suit and has now found peace thanks to you."
+			inventory.take("head")
+			party_room_one.items.add(note_3)
+		elif item in inventory and current_room == kids_cove and t == foxys_head:
+			print("You lift Foxys head off the suit, inside the old springlock suit you see a slumped over, bloody, rotting, body. You drag the body out of the old, smelly, revolting, animatronic suit and lay it on the ground. The body belongs to one of the missing children, Jeremy.")
+			kids_cove.description = "Foxys empty suit lies on the floor, missing its head, Jeremys body lies lifelessly next to Foxys empty suit, Jeremys spirit once posessed this suit and has now found peace thanks to you."
+			inventory.take("head")
+			kids_cove.items.add(note_4)
 	else:
 		print(f"There is no {item} in this room")
+
+
 
 @when("look")
 def look():
@@ -126,13 +155,7 @@ def look():
 		for item in current_room.items:
 			print(item)
 
-@when("help")
-@when("objectives")
-def objectives():
-	d = {False:"Incomplete", True:"Complete"}
-	print(f"Objective #1 - Find your flashlight. - {d[torch_got]}")
-	if torch_got:
-		print(f"Objective #2 - Head to the security office - {d[in_security_office]}")
+
 
 @when ("go DIRECTION")
 @when ("travel DIRECTION")
@@ -161,7 +184,7 @@ def use(item):
 		print("You use the torch and in the corner of the room Shadow Bonnie appears, creepily laughing, Shadow Bonnie disappears and on the floor lies a note.")	
 		office.items.add(note_1)
 	else:
-		print("You use the torch, nothing happens.") 
+		print("You use the torch, nothing happens.")  
 
 
 ###################
