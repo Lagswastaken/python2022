@@ -234,6 +234,21 @@ def use(item):
 #BINDS
 ###################
 
+###################
+#OBJECTIVES
+###################
+
+torch_got = False
+note_1_got = False
+note_2_got = False
+note_3_got = False
+note_4_got = False
+note_5_got = False
+note_6_got = False
+note_7_got = False
+note_8_got = False
+
+
 ####################
 #MAIN FUNCTION
 ###################
