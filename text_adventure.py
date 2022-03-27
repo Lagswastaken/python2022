@@ -20,7 +20,11 @@ party_room_two = Room("""Bonnies old suit from the first location is slumped ove
 right_air_vent = Room("""You crawl into the right air vent, it seems to be empty, it's very dark, you can't make out where it leads.""")
 left_air_vent = Room("""You crawl into the left air vent, it seems to be blocked by an old rusty exoskeleton.""")
 pasillo_central = Room("""Another dark empty hallway, the lights flicker on and off. Two signs hang from the ceiling, you can make our Party Rooms 1 and 2, and Security Office STAFF ONLY""")
-office = Room("""The security office is dark, Freddy sits slumped over in the corner, his jaw keeps flicking open and closed.""")
+office = Room("""The security office is dark, Freddy sits slumped over in the corner, his jaw keeps flicking open and closed. A big door stands at the back of the room, its locked.""")
+exit_hallway = Room("""You enter a long dark corridor, the cries of children echo throughout the hallway, a tall purple figure stands at the end of the hall, there are two doors, one to your left and one to the right, the figure is approaching you, act fast.""")
+left_exit = Room("""You open the door to your left, you step in and see a lifeless body hanging from the ceiling, you turn around to try leave the room but the door has locked behind you. An illuminated green sign hangs on a door in front of you, it reads EMERGENCY EXIT, there is a code lock on the door. Inscribed in blood on the wall is "WHO KILLED THE CHILDREN?".""")
+right_exit = Room("""You open the door to your right, you are surrounded by old exoskeletons, you turn around to try leave the room but the door has locked behind you. An illuminated green sign hangs on the door in front of you, it reads EXIT, there is a code lock on the door. Inscribed in blood on the wall is "WHO KILLED THE CHILDREN?".""")
+
 
 ###################
 #CONNECTIONS
@@ -84,11 +88,11 @@ chicas_head.description =("An old animatronic chicken suit head, it used to belo
 foxys_head = Item("foxys head")
 foxys_head.description =("An old animatronic fox suit head, it used to belong to Foxy.")
 
-freddies_head = Item("freddies head")
-freddies_head.description =("An old animatronic bear suit head, it used to belong to Freddy.")
+freddys_head = Item("freddys head")
+freddys_head.description =("An old animatronic bear suit head, it used to belong to Freddy.")
 
-golden_freddies_head = Item("golden freddies head")
-golden_freddies_head.description =("An old animatronic golden bear suit head, it used to belong to Golden Freddy.")
+golden_freddys_head = Item("golden freddys head")
+golden_freddys_head.description =("An old animatronic golden bear suit head, it used to belong to Golden Freddy.")
 
 ###################
 #BAGS
@@ -137,6 +141,11 @@ def look_at(item):
 @when("pick up the ITEM")
 def pickup(item):
 	global torch_got
+	global red_note_got
+	global black_note_got
+	global pink_note_got
+	global green_note_got
+	global blue_note_got
 	if item in current_room.items:
 		t = current_room.items.take(item)
 		inventory.add(t)
@@ -163,23 +172,20 @@ def pickup(item):
 			print("A Green note falls out of Foxys head.")
 			kids_cove.items.add(green_note)
 			green_note_got = True
-		elif item in inventory and current_room == office and t == freddies_head:
+		elif item in inventory and current_room == office and t == freddys_head:
 			print("You lift Freddys head off the suit, inside the old spring lock suit you see a slumped over, bloody, rotting, body. You drag the body out of the old, smelly, revolting, animatronic suit and lay it on the ground. The body belongs to one of the missing children, Fritz.")
 			office.description = "Freddys empty suit lies on the floor, missing its head, Fritzs body lies lifelessly next to Freddys empty suit, Fritzs spirit once possessed this suit and has now found peace thanks to you."
 			inventory.take("head")
 			print("A Blue note falls out of Freddys head.")
 			office.items.add(blue_note)
 			blue_note_got = True
-		elif item in inventory and current_room == show_stage and t == golden_freddies_head:
+		elif item in inventory and current_room == show_stage and t == golden_freddys_head:
 			print("You lift Golden Freddys head off the suit, inside the old spring lock suit you see a slumped over, bloody, rotting, body. You drag the body out of the old, smelly, revolting, animatronic suit and lay it on the ground. The body belongs to one of the missing children, Gabriel.")
 			show_stage.description = "Golden Freddys empty suit lies on the floor, missing its head, Gabriels body lies lifelessly next to Golden Freddys empty suit, Gabriels spirit once possessed this suit and has now found peace thanks to you."
 			inventory.take("head")
 			print("A Red note falls out of Golden Freddys head.")
 			show_stage.items.add(red_note)
 			red_note_got = True
-		elif item =="white_note":
-			print("You have found the first note.") 
-			white_note_got = True
 		elif item == "torch":
 			print("You have found your torch")
 			torch_got = True
@@ -223,17 +229,21 @@ def look():
 
 @when("use ITEM")
 def use(item):
+	global white_note_got
+	global orange_note_got
 	if item in inventory and current_room == parts_and_services and item == "torch":
 		print("You use the torch and in the corner of the room Shadow Bonnie appears, creepily laughing, Shadow Bonnie disappears and on the floor lies a note.")	
 		parts_and_services.items.add(white_note)
 		print("A white note falls out of the sky.")
+		white_note_got = True
 	elif item in inventory and current_room == show_stage and item =="torch":
 		print("You use the torch and in the corner of the room you spot Golden Freddys lifeless animatronic suit twitching slowly in the corner.")
-		show_stage.items.add(golden_freddies_head)
+		show_stage.items.add(golden_freddys_head)
 	elif item in inventory and current_room == game_area and item =="torch":
 		print("You use the torch, In the corner sits a small, crying child, you go up to them and ask if they are alright. You close your eyes and they are gone.")
 		game_area.items.add(orange_note)
 		print("An orange note sits where the crying child just was.")
+		orange_note_got = True
 	elif item in inventory and current_room == kids_cove and item =="torch":
 		print("You use the torch, In the corner sits the same small, crying child you saw earlier, you go up to them, they start talking to you.")
 		print("My name is Evan Afton, the son of William Afton, I'm telling you, HE killed them, he took those children, I was there, HES LYING, IT WAS MICHEAL. YOU CANT RUN FROM THE TRUTH WILLIAM.")
@@ -267,11 +277,14 @@ def objectives():
 	if blue_note_got == True:
 		print("Objective Seven, Investigate the Show Stage. Objective Complete:", red_note_got)
 	if red_note_got == True:
-		print("Objective Eight, Investigate Games Area. Objective Complete:", green_note_got)
+		print("Objective Eight, Investigate Games Area. Objective Complete:", orange_note_got)
 	if orange_note_got == True:
 		print("Objective Nine, Find the Crying Child. Objective Complete:", crying_child)
-	if crying_child == True:
-		print("Objective Ten, Find the exit. Objective Complete:", exit_found)
+		print("You must escape the pizzeria.")
+		office.south = exit_hallway
+		exit_hallway.east = right_exit
+		exit_hallway.west = left_exit
+
 
 
 torch_got = False
