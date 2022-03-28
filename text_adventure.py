@@ -3,6 +3,7 @@
 ###################
 
 from adventurelib import *
+from playsound import playsound
 
 ###################
 #ROOMS
@@ -22,8 +23,8 @@ left_air_vent = Room("""You crawl into the left air vent, it seems to be blocked
 pasillo_central = Room("""Another dark empty hallway, the lights flicker on and off. Two signs hang from the ceiling, you can make our Party Rooms 1 and 2, and Security Office STAFF ONLY""")
 office = Room("""The security office is dark, Freddy sits slumped over in the corner, his jaw keeps flicking open and closed. A big door stands at the back of the room, its locked.""")
 exit_hallway = Room("""You enter a long dark corridor, the cries of children echo throughout the hallway, a tall purple figure stands at the end of the hall, there are two doors, one to your left and one to the right, the figure is approaching you, act fast.""")
-left_exit = Room("""You open the door to your left, you step in and see a lifeless body hanging from the ceiling, you turn around to try leave the room but the door has locked behind you. An illuminated green sign hangs on a door in front of you, it reads EMERGENCY EXIT, there is a code lock on the door. Inscribed in blood on the wall is "WHO KILLED THE CHILDREN?".""")
-right_exit = Room("""You open the door to your right, you are surrounded by old exoskeletons, you turn around to try leave the room but the door has locked behind you. An illuminated green sign hangs on the door in front of you, it reads EXIT, there is a code lock on the door. Inscribed in blood on the wall is "WHO KILLED THE CHILDREN?".""")
+left_exit = Room("""You open the door to your left, you step in and see a lifeless body hanging from the ceiling, you turn around to try leave the room but the door has locked behind you. An illuminated green sign hangs on a door in front of you, it reads EMERGENCY EXIT. Inscribed in blood on the wall is "WHO KILLED THE CHILDREN?".""")
+right_exit = Room("""You open the door to your right, you are surrounded by old exoskeletons, you turn around to try leave the room but the door has locked behind you. An illuminated green sign hangs on the door in front of you, it reads EXIT. Inscribed in blood on the wall is "WHO KILLED THE CHILDREN?".""")
 
 
 ###################
@@ -250,6 +251,7 @@ def use(item):
 		print("You use the torch, In the corner sits the same small, crying child you saw earlier, you go up to them, they start talking to you.")
 		print("My name is Evan Afton, the son of William Afton, I'm telling you, HE killed them, he took those children, I was there, HES LYING, IT WAS MICHEAL. YOU CANT RUN FROM THE TRUTH WILLIAM.")
 		crying_child = True
+		print("You hear a noise come from the Security Office")
 	elif item not in inventory:
 		print("You do not have this {item} in your inventory")
 	else:
@@ -259,11 +261,37 @@ def use(item):
 def left_exit_1_win():
 	if crying_child == True:
 		if current_room == left_exit:
-			print("You enter the code and escape. You Win")
-		else:
-			print("There is no where to enter the code")
+			print("You scream MICHEAL AFTON, the door remains locked, you hear the door behind you open, the Purple Figure from before enters in from behind, you try to open the door but it won't budge, the Purple Figure gets closer to you, and laughs")
+			playsound("laugh.mp3")
+			print("He plunges a knife into your chest, he turns around and walks out the door. You try to crawl to the exit when everything fades to black.")
+			quit()
+		if current_room == right_exit:
+			print("You scream MICHEAL AFTON, the door remains locked, you hear the door behind you open, the Purple Figure from before enters in from behind, you try to open the door but it won't budge, the Purple Figure gets closer to you, and laughs")
+			playsound("laugh.mp3")
+			print("The Purple figure plunges a knife into your chest, he throws you against the wall and stuffs you into one of the old empty spring lock suits, the suit fails and you get crushed by the exoskeleton.")
+			quit()
+
 	else:
-		print("You don't have the code. You can't just guess it")
+		print("You don't have the killer. You can't just guess like that")
+
+@when("william afton")
+def left_exit_2_win():
+	if crying_child == True:
+		if current_room == left_exit:
+			print("You scream WILLIAM AFTON, the door in front of you swings open. You run towards the exit. The door slams shut behind you, as you run down a long dark corridor you hear the voices of the missing children cheer.")
+			playsound("fnafcheer.mp3")
+			print("You run out the door and collapse on the ground outside the pizzeria. The pizzeria is surrounded by Police officers, you ask whats wrong and one of the officers says that you've been gone for 4 months, nobody has seen you since you entered the Pizzeria, the officer tells you to take a seat, he's got a lot to explain to you.")
+	if current_room == right_exit:
+		print("You scream WILLIAM AFTON, the door in front of you swings open.")
+		playsound("fnafcheer.mp3")
+		print("")
+
+	else:
+		print("You don't know the killer. You can't just guess like that")
+
+
+
+
 
 
 ###################
@@ -297,9 +325,7 @@ def objectives():
 		print("You must escape the pizzeria.")
 		office.south = exit_hallway
 		exit_hallway.east = right_exit
-		exit_hallway.west = left_exit
-
-
+		exit_hallway.west = left_exit		
 
 torch_got = False
 white_note_got = False
@@ -320,5 +346,7 @@ crying_child = False
 def main():
 	print(current_room)
 	start()
+	playsound("fnafcheer.mp3")
+
 
 main()
