@@ -4,6 +4,7 @@
 
 from adventurelib import *
 from playsound import playsound
+import time
 
 ###################
 #ROOMS
@@ -264,12 +265,15 @@ def left_exit_1_win():
 			print("You scream MICHEAL AFTON, the door remains locked, you hear the door behind you open, the Purple Figure from before enters in from behind, you try to open the door but it won't budge, the Purple Figure gets closer to you, and laughs")
 			playsound("laugh.mp3")
 			print("He plunges a knife into your chest, he turns around and walks out the door. You try to crawl to the exit when everything fades to black.")
+			time.sleep(15)
 			quit()
 		if current_room == right_exit:
 			print("You scream MICHEAL AFTON, the door remains locked, you hear the door behind you open, the Purple Figure from before enters in from behind, you try to open the door but it won't budge, the Purple Figure gets closer to you, and laughs")
 			playsound("laugh.mp3")
 			print("The Purple figure plunges a knife into your chest, he throws you against the wall and stuffs you into one of the old empty spring lock suits, the suit fails and you get crushed by the exoskeleton.")
+			time.sleep(15)
 			quit()
+
 
 	else:
 		print("You don't have the killer. You can't just guess like that")
@@ -281,10 +285,14 @@ def left_exit_2_win():
 			print("You scream WILLIAM AFTON, the door in front of you swings open. You run towards the exit. The door slams shut behind you, as you run down a long dark corridor you hear the voices of the missing children cheer.")
 			playsound("fnafcheer.mp3")
 			print("You run out the door and collapse on the ground outside the pizzeria. The pizzeria is surrounded by Police officers, you ask whats wrong and one of the officers says that you've been gone for 4 months, nobody has seen you since you entered the Pizzeria, the officer tells you to take a seat, he's got a lot to explain to you.")
+			time.sleep(30)
+			quit()
 	if current_room == right_exit:
-		print("You scream WILLIAM AFTON, the door in front of you swings open.")
+		print("You scream WILLIAM AFTON, the door in front of you swings open. You run towards the exit. The door slams shut behind you, as you run down a long dark corridor you hear the voices of the missing children cheer.")
 		playsound("fnafcheer.mp3")
-		print("")
+		print("You run out the door and collapse on the ground outside the pizzeria. You look down to see your hand covered in blood, your clothes purple, completely covered in blood. You look at yourself in the reflection of a nearby window, your eyes are glowing purple, you're covered in blood, you are the Purple Guy.")
+		time.sleep(30)
+		quit()
 
 	else:
 		print("You don't know the killer. You can't just guess like that")
@@ -346,7 +354,6 @@ crying_child = False
 def main():
 	print(current_room)
 	start()
-	playsound("fnafcheer.mp3")
 
 
 main()
