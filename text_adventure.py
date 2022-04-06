@@ -26,12 +26,13 @@ office = Room("""The security office is dark, Freddy sits slumped over in the co
 exit_hallway = Room("""You enter a long dark corridor, the cries of children echo throughout the hallway, a tall purple figure stands at the end of the hall, there are two doors, one to your left and one to the right, the figure is approaching you, act fast.""")
 left_exit = Room("""You open the door to your left, you step in and see a lifeless body hanging from the ceiling, you turn around to try leave the room but the door has locked behind you. An illuminated green sign hangs on a door in front of you, it reads EMERGENCY EXIT. Inscribed in blood on the wall is "WHO KILLED THE CHILDREN?".""")
 right_exit = Room("""You open the door to your right, you are surrounded by old exoskeletons, you turn around to try leave the room but the door has locked behind you. An illuminated green sign hangs on the door in front of you, it reads EXIT. Inscribed in blood on the wall is "WHO KILLED THE CHILDREN?".""")
-
+toilets = Room("""You enter the STAFF bathroom, It must have been made so mechanics working on suits wouldn't have to traverse the whole location to use the bathroom. Its dark and smells terrible. The toilet stall door is no where to be seen and there is only an old rusty toilet left""")
 
 ###################
 #CONNECTIONS
 ###################
 parts_and_services.east = main_hall
+parts_and_services.west = toilets
 main_hall.east = game_area
 main_hall.south = pasillo_central
 pasillo_central.east = party_room_two
@@ -198,6 +199,7 @@ def pickup(item):
 
 
 
+
 @when("look")
 def look():
 	print(current_room)
@@ -298,6 +300,38 @@ def left_exit_2_win():
 		print("You don't know the killer. You can't just guess like that")
 
 
+###################
+#EASTER EGGS
+###################
+
+@when("drink")
+def drink():
+	if current_room == toilets:
+		print("You bend down and take a drink from the old toilet bowl, what were you thinking???")
+		print("Hi, this is Bob Ross communicating from beyond the grave. I dedicated my life to painting so that you brats could do something more productive with your lives than sitting on your *** playing your stupid Atari games all day. I don't appreciate you morons abusing my legacy and turning me into some childish meme that you can spam on your little MSM chat thing. Now go paint a mountain or something and don't you dare copypaste this."*90)
+		time.sleep(5)
+		quit()
+
+@when("enter matrix")
+def enter_matrix():
+	if current_room == party_room_one:
+		print("Is this a crossover episode?")
+		time.sleep(5)
+		print("Fine then, Entering the Matrix")
+		time.sleep(5)
+		print("0101010101010100010101111110000"*10000)
+		print("Wake up Neo")
+		time.sleep(2)
+		quit()
+@when("my name is")
+def my_name_is():
+	if current_room == right_air_vent:
+		print("Hi my name is Carmen Winstead. I'm 17 years old. I am very similar to you... Did I mention to you that I'm dead. A few years ago a group of girls pushed me down a sewer hole to try and embarrass me. When I didn't come back up the police came. The girls said that I had fell and everyone believed them. The police found my body in the sewer. I had a broken neck and my face was torn off. Send this message to 15 people after you read the whole message if you value your life! A boy called David received this message. He just laughed and deleted it. When he was in the shower he heard laughing... MY LAUGHTER! He got really scared, rushed to his phone to repost this message... But he was too late. The next morning his mum entered his bedroom and all she found was a message written in his blood saying, You will never have him back! No one has found his body yet... because he is with me!... Send this to 15 people in the next 5 minutes if you don't want your fate to be the same as David's. Your time starts... NOW! The story is true you can research it on google")
+		time.sleep(5)
+		print("Hi my name is Carmen Winstead. I'm 17 years old. I am very similar to you... Did I mention to you that I'm dead. A few years ago a group of girls pushed me down a sewer hole to try and embarrass me. When I didn't come back up the police came. The girls said that I had fell and everyone believed them. The police found my body in the sewer. I had a broken neck and my face was torn off. Send this message to 15 people after you read the whole message if you value your life! A boy called David received this message. He just laughed and deleted it. When he was in the shower he heard laughing... MY LAUGHTER! He got really scared, rushed to his phone to repost this message... But he was too late. The next morning his mum entered his bedroom and all she found was a message written in his blood saying, You will never have him back! No one has found his body yet... because he is with me!... Send this to 15 people in the next 5 minutes if you don't want your fate to be the same as David's. Your time starts... NOW! The story is true you can research it on google"*10000)
+		print("SHARE THIS TO 15 PEOPLE NOWWWWWWWWWWW")
+		quit()
+
 
 
 
@@ -330,7 +364,7 @@ def objectives():
 	if orange_note_got == True:
 		print("Objective Nine, Find the Crying Child. Objective Complete:", crying_child)
 	if crying_child == True:
-		print("You must escape the pizzeria.")
+		print("Objective Ten, You must escape the pizzeria.")
 		office.south = exit_hallway
 		exit_hallway.east = right_exit
 		exit_hallway.west = left_exit		
