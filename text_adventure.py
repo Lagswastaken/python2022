@@ -50,9 +50,9 @@ kids_cove.north = game_area
 pasillo_central.south = office
 
 
-###################
-#ITEMS
-###################
+#######################
+#ITEMS AND DESCRIPTIONS
+#######################
 
 Item.description =""
 
@@ -118,6 +118,8 @@ inventory = Bag()
 
 current_room = parts_and_services
 
+#Check Inventory
+
 @when("inventory")
 @when("show inventory")
 @when("what is in my pocket")
@@ -134,6 +136,9 @@ def look_at(item):
 		print(t.description)
 	else:
 		print(f"You aren't carrying a {item}")
+
+
+#Taking Items
 
 @when("get ITEM")
 @when("take ITEM")
@@ -199,6 +204,7 @@ def pickup(item):
 
 
 
+#Exits and Items
 
 @when("look")
 def look():
@@ -210,6 +216,7 @@ def look():
 			print(item)
 
 
+#Travel Direction
 
 @when ("go DIRECTION")
 @when ("travel DIRECTION")
@@ -228,9 +235,9 @@ def travel(direction):
 		print(f"You go {direction}")
 		print(current_room)
 		print (current_room.exits())
-@when("look")
-def look():
-	print(current_room)
+
+
+#Use items and have different options for different rooms
 
 @when("use ITEM")
 def use(item):
@@ -259,6 +266,11 @@ def use(item):
 		print("You do not have this {item} in your inventory")
 	else:
 		print("You use the {item}, nothing happens.")  
+
+
+###################
+#ENDINGS
+###################
 
 @when("micheal afton")
 def left_exit_1_win():
@@ -308,20 +320,23 @@ def left_exit_2_win():
 def drink():
 	if current_room == toilets:
 		print("You bend down and take a drink from the old toilet bowl, what were you thinking???")
+		time.sleep(4)
+		print("Hi, this is Bob Ross communicating from beyond the grave. I dedicated my life to painting so that you brats could do something more productive with your lives than sitting on your *** playing your stupid Atari games all day. I don't appreciate you morons abusing my legacy and turning me into some childish meme that you can spam on your little MSM chat thing. Now go paint a mountain or something and don't you dare copypaste this.")
+		time.sleep(3)
 		print("Hi, this is Bob Ross communicating from beyond the grave. I dedicated my life to painting so that you brats could do something more productive with your lives than sitting on your *** playing your stupid Atari games all day. I don't appreciate you morons abusing my legacy and turning me into some childish meme that you can spam on your little MSM chat thing. Now go paint a mountain or something and don't you dare copypaste this."*90)
 		time.sleep(5)
 		quit()
 
 @when("enter matrix")
+@when("enter the matrix")
 def enter_matrix():
 	if current_room == party_room_one:
 		print("Is this a crossover episode?")
 		time.sleep(5)
 		print("Fine then, Entering the Matrix")
 		time.sleep(5)
-		print("0101010101010100010101111110000"*10000)
-		print("Wake up Neo")
-		time.sleep(2)
+		print("0101010101010100010101111110000"*10000000)
+		time.sleep(15)
 		quit()
 @when("my name is")
 def my_name_is():
@@ -332,6 +347,17 @@ def my_name_is():
 		print("SHARE THIS TO 15 PEOPLE NOWWWWWWWWWWW")
 		quit()
 
+@when("take selfie with mrs")
+def selfie():
+	if current_room == left_air_vent:
+		print("Mrs White appears in the air vent with you, she takes out her mobile communicator and takes a photo with you. She disappears")
+
+@when("darth plagueis")
+@when("darth plagueis the wise")
+@when("did you ever hear the tragedy of darth plagueis the wise")
+def darth_plagueis():
+	if current_room == show_stage:
+		print("Did you ever hear the tragedy of Darth Plagueis The Wise? I thought not. It’s not a story the Jedi would tell you. It’s a Sith legend. Darth Plagueis was a Dark Lord of the Sith, so powerful and so wise he could use the Force to influence the midichlorians to create life… He had such a knowledge of the dark side that he could even keep the ones he cared about from dying. The dark side of the Force is a pathway to many abilities some consider to be unnatural. He became so powerful… the only thing he was afraid of was losing his power, which eventually, of course, he did. Unfortunately, he taught his apprentice everything he knew, then his apprentice killed him in his sleep. Ironic. He could save others from death, but not himself.")
 
 
 
